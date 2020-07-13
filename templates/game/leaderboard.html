@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h1>Game.html</h1>
+        <a href="{% url 'game' %}">Back to game</a>
+        <p>You are logged in as {{ user.username }}</p>
+        <br>
+        {% for player in players %}
+            <p>{{ player.user.username }} : {{ player.power_crystals }} </p>
+        {% endfor %}
+    {% else %}
+    <!-- USER NOT LOGGED IN -->
+        <h1>Game.html</h1>
+        <div class="container">
+            <p>Please log in or register to play</p>
+            <button onclick="location.href='{% url 'login' %}'"; id="login_button" type="button" class="btn btn-dark">Login</button>
+            <button onclick="location.href='{% url 'register' %}'"; id="register_button" type="button" class="btn btn-dark">Register</button>
+        </div>
+    {% endif %}
+{% endblock %}
