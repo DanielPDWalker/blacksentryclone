@@ -17,9 +17,8 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu">
                     {% for enemy in e %}
-                        <button class="dropdown-item" type="button">{{ e.name }}</button>
-                  <button class="dropdown-item" type="button">Another action</button>
-                  <button class="dropdown-item" type="button">Something else here</button>
+                        <button class="dropdown-item" type="button">{{ e.name }} - {{ e.power_crystals }}</button>
+                    {% endfor %}
                 </div>
               </div>
               <br>
