@@ -17,7 +17,7 @@
                     {% endfor %}
                 </select>
               <br>
-            <button onclick="location.href='{% url 'game' %}'"; id="gain_power_crystals_button" type="submit" class="btn btn-dark">Fight Monster!</button>
+            <button onclick="this.form.submit(); this.disabled=true; location.href='{% url 'game' %}';" id="gain_power_crystals_button" type="submit" class="btn btn-dark">Fight Monster!</button>
         </form>
     {% else %}
     <!-- USER NOT LOGGED IN -->
@@ -25,7 +25,7 @@
         <div class="container">
             <p>Please log in or register to play</p>
             <button onclick="location.href='{% url 'login' %}'"; id="login_button" type="button" class="btn btn-dark">Login</button>
-            <button onclick="location.href='{% url 'register' %}'"; id="register_button" type="button" class="btn btn-dark">Register</button>
+            <button onclick="location.href='{% url 'register' %}';"; id="register_button" type="button" class="btn btn-dark">Register</button>
         </div>
     {% endif %}
 {% endblock %}
