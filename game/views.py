@@ -27,7 +27,7 @@ def game(request):
 
 def leaderboard(request):
 
-    players = Player.objects.all().order_by('-power_crystals')
+    players = Player.objects.all().order_by('-power_crystals')[:10]
 
     context = {
         'players': players
