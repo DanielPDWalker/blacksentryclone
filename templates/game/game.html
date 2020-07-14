@@ -10,19 +10,14 @@
         <form method="POST", class="form-group">
             {% csrf_token %}
             <br>
-            <p>Choose an enemy to fight</p>
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Dropdown
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                    {% for enemy in e %}
-                        <button class="dropdown-item" type="button">{{ e.name }} - {{ e.power_crystals }}</button>
+            <label for="enemy_dropdown">Choose an enemy to fight</label>
+                <select name="enemy_dropdown" id="enemy_dropdown">
+                    {% for enemy in enemies %}
+                    <option value="{{ enemy }}">{{ enemy.name }}</option>
                     {% endfor %}
-                </div>
-              </div>
+                </select>
               <br>
-            <button onclick="location.href='{% url 'game' %}'"; id="gain_power_crystals_button" type="submit" class="btn btn-dark">Gain a power crystal</button>
+            <button onclick="location.href='{% url 'game' %}'"; id="gain_power_crystals_button" type="submit" class="btn btn-dark">Fight Monster!</button>
         </form>
     {% else %}
     <!-- USER NOT LOGGED IN -->

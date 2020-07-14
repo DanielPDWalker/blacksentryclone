@@ -27,5 +27,5 @@ class Enemy(models.Model):
     damage = models.IntegerField(default=10)
 
     def __str__(self):
-            return self.name
+        return self.name
     pass
