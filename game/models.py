@@ -19,6 +19,7 @@ class Player(models.Model):
 
 
 class Enemy(models.Model):
+    name = models.TextField(max_length=50, default='')
     power_crystals = models.IntegerField(default=10)
     hp_current = models.IntegerField(default=10)
     hp_max = models.IntegerField(default=10)

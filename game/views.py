@@ -1,8 +1,10 @@
 from django.shortcuts import render
-from .models import Player
+from .models import Player, Enemy
 
 # Create your views here.
 def game(request):
+
+    e = Enemy.objects.all().order_by('power_crystals')
 
     try:
         p = Player.objects.get(user=request.user)
@@ -19,7 +21,8 @@ def game(request):
         pass
 
     context = {
-        "player": p
+        "player": p,
+        "enemies": e
         }
 
     return render(request, 'game/game.html', context)

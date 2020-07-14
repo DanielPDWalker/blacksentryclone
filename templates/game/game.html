@@ -9,6 +9,20 @@
         <p>You have {{ player.power_crystals }} power crystals.</p>
         <form method="POST", class="form-group">
             {% csrf_token %}
+            <br>
+            <p>Choose an enemy to fight</p>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Dropdown
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                    {% for enemy in e %}
+                        <button class="dropdown-item" type="button">{{ e.name }}</button>
+                  <button class="dropdown-item" type="button">Another action</button>
+                  <button class="dropdown-item" type="button">Something else here</button>
+                </div>
+              </div>
+              <br>
             <button onclick="location.href='{% url 'game' %}'"; id="gain_power_crystals_button" type="submit" class="btn btn-dark">Gain a power crystal</button>
         </form>
     {% else %}
