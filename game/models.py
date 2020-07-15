@@ -11,6 +11,7 @@ class Player(models.Model):
     hp_max = models.IntegerField(default=10)
     gold = models.IntegerField(default=0)
     damage = models.IntegerField(default=10)
+    heal_cost = models.IntegerField(default=0)
          
     def __str__(self):
         return self.user.username

@@ -9,19 +9,40 @@
         <p>You are logged in as {{ user.username }}</p>
         <br>
         <p>{{ player.hp_current }} / {{ player.hp_max }} HP</p>
+        {% if player.hp_current < player.hp_max %}
+            {% if player.gold > player.heal_cost %}
+                <form method="POST", class="form-group">
+                    {% csrf_token %}
+                    <button onclick="this.form.submit(); this.disabled=true; location.href='{% url 'game' %}';" name="heal_button_active" type="submit" class="btn btn-dark">Heal</button>
+                    <label for="heal_button_active">Cost : {{ player.heal_cost }} Gold </label>
+                </form>
+            {% else %}
+                <form method="POST", class="form-group">
+                    {% csrf_token %}
+                    <label for="heal_button_disabled">Cost :{{ player.heal_cost }} Gold</label>
+                    <button name="heal_button_disabled" disabled class="btn btn-dark">Heal</button>
+                </form>
+            {% endif %}
+        {% endif %}
+        <br>
         <p>{{ player.power_crystals }} Power Crystals</p>
         <p>{{ player.gold }} Gold</p>
         <form method="POST", class="form-group">
             {% csrf_token %}
             <br>
-            <label for="enemy_dropdown">Choose an enemy to fight</label>
+            <label for="enemy_dropdown">Choose an enemy to fight:</label>
                 <select name="enemy_dropdown" id="enemy_dropdown">
                     {% for enemy in enemies %}
-                    <option value="{{ enemy }}">{{ enemy.name }}</option>
+                        {% if enemy.name == current_enemy %}
+                        <option value="{{ enemy }}" selected>{{ enemy.name }}</option>
+                        {% else %}
+                            <option value="{{ enemy }}">{{ enemy.name }}</option>
+
+                        {% endif %}
                     {% endfor %}
                 </select>
               <br>
-            <button onclick="this.form.submit(); this.disabled=true; location.href='{% url 'game' %}';" id="gain_power_crystals_button" type="submit" class="btn btn-dark">Fight Monster!</button>
+            <button onclick="this.form.submit(); this.disabled=true; location.href='{% url 'game' %}';" name="gain_power_crystals_button" type="submit" class="btn btn-dark">Fight Monster!</button>
         </form>
     {% else %}
     <!-- USER NOT LOGGED IN -->
