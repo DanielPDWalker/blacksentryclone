@@ -12,7 +12,7 @@ def game(request):
     except:
         p = Player(user=request.user)
         p.save()
-    
+
     context = {
         "player": p,
         "enemies": e
