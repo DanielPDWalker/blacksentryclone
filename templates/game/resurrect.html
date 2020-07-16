@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        {% if player.is_banned %}
+            <h1>Game.html</h1>
+            <div class="container">
+                <p>You have been banned. Make a new account, try to be less like your old self. Or leave.</p>
+                <button onclick="location.href='{% url 'register' %}';"; id="register_button" type="button" class="btn btn-dark">Register</button>
+            </div>
+        {% else %} 
+            {% if user.player.hp_current < 1 %}
+            
+                <h1>Game.html</h1>
+                <a href="{% url 'leaderboard' %}">Leaderboard</a>
+                <br>
+                <br>
+                <p>You are logged in as {{ user.username }} aka {{ player.name }}</p>
+                <br>
+                <p>{{ player.hp_current }} / {{ player.hp_max }} HP</p>
+                <p>{{ player.power_crystals }} Power Crystals</p>
+                <p>{{ player.gold }} Gold</p>
+                <br>
+                <p>You have died. 
+                    {% if current_enemy %}The cause was a rather vicious {{ current_enemy }} who managed to hit you for {{ dmg_delt_enemy }}.
+                    {% endif %}</p>
+                <p>Speaking as a god, I think I can fix this... For a small fee...</p>
+                <form method="POST", class="form-group">
+                    {% csrf_token %}
+                    <br>
+                    <input type="submit" name="resurrect_button" class="btn btn-dark" value="Resurrect" />
+                    <label for="resurrect_button">Cost : {{player.gold }} (Yes that is all of your gold).</label>
+                </form>
+            {% else %}
+                <h1>Game.html</h1>
+                <a href="{% url 'leaderboard' %}">Leaderboard</a>
+                <br>
+                <br>
+                <p>You are logged in as {{ user.username }}</p>
+                <br>
+                <p>{{ player.hp_current }} / {{ player.hp_max }} HP</p>
+                <p>{{ player.power_crystals }} Power Crystals</p>
+                <p>{{ player.gold }} Gold</p>
+                <br>
+                <h3>Are you lost mortal?</h3>
+                <a href="{% url 'game' %}">Back to game</a>
+            {% endif %}
+        {% endif %}
+            
+    {% else %}
+    <!-- USER NOT LOGGED IN -->
+        <h1>Game.html</h1>
+        <div class="container">
+            <p>Please log in or register to play</p>
+            <button onclick="location.href='{% url 'login' %}'"; id="login_button" type="button" class="btn btn-dark">Login</button>
+            <button onclick="location.href='{% url 'register' %}';"; id="register_button" type="button" class="btn btn-dark">Register</button>
+        </div>
+    {% endif %}
+{% endblock %}

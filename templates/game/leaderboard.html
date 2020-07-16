@@ -2,30 +2,38 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <h1>Game.html</h1>
-        <a href="{% url 'game' %}">Back to game</a>
-        <p>You are logged in as {{ user.username }}</p>
-        <br>
-        <div class="row">
-            <div class="col-xs-4">
-                <div class="container">
-                    <h4>Top 10 by Power Crystals</h4>
-                    <br>
-                    {% for player in players_pc %}
-                        <p>{{ player.user.username }} : {{ player.power_crystals }} Power Crystals</p>
-                    {% endfor %}
+        {% if player.is_banned %}
+            <h1>Game.html</h1>
+            <div class="container">
+                <p>You have been banned. Make a new account, try to be less like your old self. Or leave.</p>
+                <button onclick="location.href='{% url 'register' %}';"; id="register_button" type="button" class="btn btn-dark">Register</button>
+            </div>
+        {% else %}
+            <h1>Game.html</h1>
+            <a href="{% url 'game' %}">Back to game</a>
+            <p>You are logged in as {{ user.username }} aka {{ player.name }}</p>
+            <br>
+            <div class="row">
+                <div class="col-xs-4">
+                    <div class="container">
+                        <h4>Top 10 by Power Crystals</h4>
+                        <br>
+                        {% for player in players_pc %}
+                            <p>{{ player.name }} : {{ player.power_crystals }} Power Crystals</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-xs-4 float-right">
+                    <div class="container">
+                        <h4>Top 10 by Gold</h4>
+                        <br>
+                        {% for player in players_gold %}
+                            <p>{{ player.name }} : {{ player.gold }} Gold</p>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-            <div class="col-xs-4 float-right">
-                <div class="container">
-                    <h4>Top 10 by Gold</h4>
-                    <br>
-                    {% for player in players_gold %}
-                        <p>{{ player.user.username }} : {{ player.gold }} Gold</p>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+        {% endif %}
     {% else %}
     <!-- USER NOT LOGGED IN -->
         <h1>Game.html</h1>

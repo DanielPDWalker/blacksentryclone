@@ -1,5 +1,6 @@
-from django.shortcuts import render
-from .utils import combat, stats
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from .utils import combat, stats, player_manager
 from .models import Player, Enemy
 
 # Create your views here.
@@ -10,20 +11,26 @@ def game(request):
     try:
         p = Player.objects.get(user=request.user)
     except:
-        p = Player(user=request.user)
-        p.save()
+        player_manager.init_player(user=request.user)
+
+    if not combat.check_alive(p):
+        return redirect(resurrect)
 
     context = {
         "player": p,
         "enemies": e
         }
         
+    if not combat.check_alive(p):
+        return render(request, 'game/resurrect.html', context)
+
     if request.method == 'POST':
         #if 'gain_power_crystals_button' in request.POST:
         if request.POST.get('combat_button'):
             p = Player.objects.get(user=request.user)
             enemy_to_fight = Enemy.objects.get(name=request.POST.get('enemy_dropdown'))
             p, dmg_delt_player, dmg_delt_enemy, result = combat.fight(p, enemy_to_fight)
+            player_manager.change_name(p)
 
             context = {
                 "player": p,
@@ -33,16 +40,15 @@ def game(request):
                 "dmg_delt_player": dmg_delt_player,
                 "dmg_delt_enemy": dmg_delt_enemy
                 }
-
-            if combat.check_alive(p):
-                p.save()
-            else:
-                return render(request, 'game/ressurect.html', context)
+            
+            p.save()
+            if not combat.check_alive(p):
+                return redirect(resurrect)
+                
         
         elif request.POST.get('heal_button_active'):
             p.gold -= p.heal_cost
             p.hp_current = p.hp_max
-            p.save()
 
 
     stats.update_stats(p)
@@ -52,8 +58,8 @@ def game(request):
 
 def leaderboard(request):
 
-    players_pc = Player.objects.all().order_by('-power_crystals')[:10]
-    players_gold = Player.objects.all().order_by('-gold')[:10]
+    players_pc = Player.objects.filter(is_banned=False).order_by('-power_crystals')[:10]
+    players_gold = Player.objects.filter(is_banned=False).order_by('-gold')[:10]
 
     context = {
         "players_pc": players_pc,
@@ -62,12 +68,24 @@ def leaderboard(request):
     return render(request, 'game/leaderboard.html', context)
 
 
-def ressurect(request):
-
+def resurrect(request):
     p = Player.objects.get(user=request.user)
+    e = Enemy.objects.all().order_by('power_crystals')
 
+    if request.POST.get('resurrect_button'):
+        p.gold -= p.gold
+        p.hp_current = p.hp_max
+        p.save()
+
+        context = {
+        "player": p,
+        "enemies": e
+        }
+
+        return redirect(game)
     context = {
-        "player": p
-    }
-
-    return render(request, 'game/ressurect.html', context)
+        "player": p,
+        "enemies": e
+        }
+        
+    return render(request, 'game/resurrect.html', context)

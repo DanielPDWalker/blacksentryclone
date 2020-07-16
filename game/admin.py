@@ -3,7 +3,8 @@ from .models import Player, Enemy
 
 # Register your models here.
 class PlayerAdmin(admin.ModelAdmin):
-    list_display = ('user', 'power_crystals', 'gold', 'hp_max', 'hp_current', 'damage')
+    list_display = ('user', 'power_crystals', 'gold', 'hp_current', 'damage', 'is_banned')
+    list_editable = ('is_banned',)
     list_display_links = ('user',)
     list_per_page = 10
 

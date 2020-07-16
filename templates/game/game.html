@@ -2,47 +2,53 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <h1>Game.html</h1>
-        <a href="{% url 'leaderboard' %}">Leaderboard</a>
-        <br>
-        <br>
-        <p>You are logged in as {{ user.username }}</p>
-        <br>
-        <p>{{ player.hp_current }} / {{ player.hp_max }} HP</p>
-        {% if player.hp_current < player.hp_max %}
-            {% if player.gold > player.heal_cost %}
-                <form method="POST", class="form-group">
-                    {% csrf_token %}
-                    <input type="submit" name="heal_button_active" class="btn btn-dark" value="Heal"/>
-                    <label for="heal_button_active">Cost : {{ player.heal_cost }} Gold </label>
-                </form>
-            {% endif %}
+        {% if player.is_banned %}
+            <h1>Game.html</h1>
+            <div class="container">
+                <p>You have been banned. Make a new account, try to be less like your old self. Or leave.</p>
+                <button onclick="location.href='{% url 'register' %}';"; id="register_button" type="button" class="btn btn-dark">Register</button>
+            </div>
         {% else %}
+            <h1>Game.html</h1>
+            <a href="{% url 'leaderboard' %}">Leaderboard</a>
+            <br>
+            <br>
+            <p>You are logged in as {{ user.username }} aka {{ player.name }}</p>
+            <br>
+            <p>{{ player.hp_current }} / {{ player.hp_max }} HP</p>
+                {% if player.gold >= player.heal_cost and player.hp_current < player.hp_max %}
+                    <form method="POST", class="form-group">
+                        {% csrf_token %}
+                        <input type="submit" name="heal_button_active" class="btn btn-dark" value="Heal"/>
+                        <label for="heal_button_active">Cost : {{ player.heal_cost }} Gold </label>
+                    </form>
+                {% else %}
+                    <form method="POST", class="form-group">
+                        {% csrf_token %}
+                        <input type="submit" name="heal_button_disabled" disabled class="btn btn-dark" value="Heal"/>
+                        <label for="heal_button_disabled">Cost : {{ player.heal_cost }} Gold</label>
+                    </form>  
+                {% endif %}
+            <br>
+            <p>{{ player.power_crystals }} Power Crystals</p>
+            <p>{{ player.gold }} Gold</p>
             <form method="POST", class="form-group">
                 {% csrf_token %}
-                <input type="submit" name="heal_button_disabled" disabled class="btn btn-dark" value="Heal"/>
-                <label for="heal_button_disabled">Cost : 0 Gold</label>
-            </form>  
+                <br>
+                <label for="enemy_dropdown">Choose an enemy to fight:</label>
+                    <select name="enemy_dropdown" id="enemy_dropdown">
+                        {% for enemy in enemies %}
+                            {% if enemy.name == current_enemy %}
+                            <option value="{{ enemy }}" selected>{{ enemy.name }}</option>
+                            {% else %}
+                                <option value="{{ enemy }}">{{ enemy.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                <br>
+                <input type="submit" name="combat_button" class="btn btn-dark" value="Fight Monster!" />
+            </form>
         {% endif %}
-        <br>
-        <p>{{ player.power_crystals }} Power Crystals</p>
-        <p>{{ player.gold }} Gold</p>
-        <form method="POST", class="form-group">
-            {% csrf_token %}
-            <br>
-            <label for="enemy_dropdown">Choose an enemy to fight:</label>
-                <select name="enemy_dropdown" id="enemy_dropdown">
-                    {% for enemy in enemies %}
-                        {% if enemy.name == current_enemy %}
-                        <option value="{{ enemy }}" selected>{{ enemy.name }}</option>
-                        {% else %}
-                            <option value="{{ enemy }}">{{ enemy.name }}</option>
-                        {% endif %}
-                    {% endfor %}
-                </select>
-              <br>
-            <input type="submit" name="combat_button" class="btn btn-dark" value="Fight Monster!" />
-        </form>
     {% else %}
     <!-- USER NOT LOGGED IN -->
         <h1>Game.html</h1>
