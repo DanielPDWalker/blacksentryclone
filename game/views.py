@@ -20,7 +20,7 @@ def game(request):
         
     if request.method == 'POST':
         #if 'gain_power_crystals_button' in request.POST:
-        if request.POST.get('gain_power_crystals_button') == 'gain_power_crystals_button':
+        if request.POST.get('combat_button'):
             p = Player.objects.get(user=request.user)
             enemy_to_fight = Enemy.objects.get(name=request.POST.get('enemy_dropdown'))
             p, dmg_delt_player, dmg_delt_enemy, result = combat.fight(p, enemy_to_fight)
@@ -39,7 +39,7 @@ def game(request):
             else:
                 return render(request, 'game/ressurect.html', context)
         
-        elif 'heal_button_active' == request.POST.get('heal_button_active'):
+        elif request.POST.get('heal_button_active'):
             p.gold -= p.heal_cost
             p.hp_current = p.hp_max
             p.save()

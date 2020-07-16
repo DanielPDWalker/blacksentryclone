@@ -13,16 +13,16 @@
             {% if player.gold > player.heal_cost %}
                 <form method="POST", class="form-group">
                     {% csrf_token %}
-                    <button onclick="this.form.submit(); this.disabled=true; location.href='{% url 'game' %}';" name="heal_button_active" type="submit" class="btn btn-dark">Heal</button>
+                    <input type="submit" name="heal_button_active" class="btn btn-dark" value="Heal"/>
                     <label for="heal_button_active">Cost : {{ player.heal_cost }} Gold </label>
                 </form>
-            {% else %}
-                <form method="POST", class="form-group">
-                    {% csrf_token %}
-                    <label for="heal_button_disabled">Cost :{{ player.heal_cost }} Gold</label>
-                    <button name="heal_button_disabled" disabled class="btn btn-dark">Heal</button>
-                </form>
             {% endif %}
+        {% else %}
+            <form method="POST", class="form-group">
+                {% csrf_token %}
+                <input type="submit" name="heal_button_disabled" disabled class="btn btn-dark" value="Heal"/>
+                <label for="heal_button_disabled">Cost : 0 Gold</label>
+            </form>  
         {% endif %}
         <br>
         <p>{{ player.power_crystals }} Power Crystals</p>
@@ -37,12 +37,11 @@
                         <option value="{{ enemy }}" selected>{{ enemy.name }}</option>
                         {% else %}
                             <option value="{{ enemy }}">{{ enemy.name }}</option>
-
                         {% endif %}
                     {% endfor %}
                 </select>
               <br>
-            <button onclick="this.form.submit(); this.disabled=true; location.href='{% url 'game' %}';" name="gain_power_crystals_button" type="submit" class="btn btn-dark">Fight Monster!</button>
+            <input type="submit" name="combat_button" class="btn btn-dark" value="Fight Monster!" />
         </form>
     {% else %}
     <!-- USER NOT LOGGED IN -->
