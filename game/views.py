@@ -15,6 +15,7 @@ def game(request):
         p = Player.objects.get(user=request.user)
     except:
         p = player_manager.init_player(request.user)
+        p.save()
 
     if not combat.check_alive(p):
         return redirect(resurrect)

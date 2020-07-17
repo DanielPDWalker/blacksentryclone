@@ -24,12 +24,11 @@ def get_random_username():
     else:
         return username
 
-def init_player(player_obj):
+def init_player(user_obj):
     username = get_random_username()
 
-    p = Player(player_obj)
+    p = Player(user=user_obj)
     p.name = username
-    p.save()
 
     return p
 
