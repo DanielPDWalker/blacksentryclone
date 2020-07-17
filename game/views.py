@@ -8,10 +8,13 @@ def game(request):
 
     e = Enemy.objects.all().order_by('power_crystals')
 
+    if request.user.is_anonymous:
+        return render(request, 'game/game.html')
+
     try:
         p = Player.objects.get(user=request.user)
     except:
-        player_manager.init_player(user=request.user)
+        p = player_manager.init_player(request.user)
 
     if not combat.check_alive(p):
         return redirect(resurrect)
@@ -25,12 +28,11 @@ def game(request):
         return render(request, 'game/resurrect.html', context)
 
     if request.method == 'POST':
-        #if 'gain_power_crystals_button' in request.POST:
         if request.POST.get('combat_button'):
             p = Player.objects.get(user=request.user)
             enemy_to_fight = Enemy.objects.get(name=request.POST.get('enemy_dropdown'))
             p, dmg_delt_player, dmg_delt_enemy, result = combat.fight(p, enemy_to_fight)
-            player_manager.change_name(p)
+            
 
             context = {
                 "player": p,
@@ -89,3 +91,15 @@ def resurrect(request):
         }
         
     return render(request, 'game/resurrect.html', context)
+
+def namechanger(request):
+    p = Player.objects.get(user=request.user)
+
+    if request.POST.get('name_change_button'):
+        player_manager.change_name(p)
+
+    context = {
+        "player": p
+    }
+
+    return render(request, 'game/namechanger.html', context)

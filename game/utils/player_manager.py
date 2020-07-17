@@ -17,7 +17,7 @@ def get_random_username():
         for name in n_file:
             nouns.append(name.strip())
 
-    username = random.choice(adjectives).title() + ' ' + random.choice(nouns).title() + str(random.randrange(1000))
+    username = random.choice(adjectives).title() + random.choice(nouns).title() + str(random.randrange(1000))
 
     if username in Player.objects.filter(name=username):
         get_random_username()
@@ -30,6 +30,8 @@ def init_player(player_obj):
     p = Player(player_obj)
     p.name = username
     p.save()
+
+    return p
 
 
 def change_name(player_obj):

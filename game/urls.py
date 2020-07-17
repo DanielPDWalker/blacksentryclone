@@ -1,8 +1,10 @@
-from django.urls import path
+from django.urls import path, include
+#from django.contrib.auth import logout
 from . import views
 
 urlpatterns = [
     path('', views.game, name='game'),
     path('leaderboard/', views.leaderboard, name='leaderboard'),
-    path('resurrect/', views.resurrect, name='resurrect')
+    path('resurrect/', views.resurrect, name='resurrect'),
+    path('namechanger/', views.namechanger, name='namechanger')
 ]
