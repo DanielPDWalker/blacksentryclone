@@ -3,13 +3,11 @@
 {% block content %}
     {% if user.is_authenticated %}
         {% if player.is_banned %}
-            <h1>Game.html</h1>
             <div class="container">
                 <p>You have been banned. Make a new account, try to be less like your old self. Or leave.</p>
                 <button onclick="location.href='{% url 'register' %}';"; id="register_button" type="button" class="btn btn-dark">Register</button>
             </div>
         {% else %}
-            <h1>Game.html</h1>
             <a href="{% url 'game' %}"">[Game]</a>
             <a href="{% url 'leaderboard' %}">[Leaderboard]</a>
             <a href="{% url 'namechanger' %}">[Change Name]</a>
@@ -68,7 +66,6 @@
         {% endif %}
     {% else %}
     <!-- USER NOT LOGGED IN -->
-        <h1>Game.html</h1>
         <div class="container">
             <p>Please log in or register to play</p>
             <button onclick="location.href='{% url 'login' %}'"; id="login_button" type="button" class="btn btn-dark">Login</button>

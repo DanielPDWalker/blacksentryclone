@@ -69,6 +69,9 @@ class GameplayTest(unittest.TestCase):
 
         
     def test_healing_after_ramage(self):
+        """
+        Rampage so that
+        """
         # Edythe lusts for more rat blood. She attacks 5 more.
         for i in range(0, 5):
             self.combat('Rat')
