@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .utils import combat, stats, player_manager
 from .models import Player, Enemy
 
-# Create your views here.
+
 def game(request):
 
     e = Enemy.objects.all().order_by('power_crystals')

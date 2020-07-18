@@ -132,6 +132,6 @@ LOGIN_REDIRECT_URL='/game'
 LOGOUT_REDIRECT_URL = 'index'
 
 try:
-    from .local_settings import *
+    from .local_settings import DATABASES
 except ImportError:
     pass
