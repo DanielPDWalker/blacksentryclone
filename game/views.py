@@ -47,7 +47,7 @@ def game(request):
             
             p.save()
             if not combat.check_alive(p):
-                return redirect(resurrect)
+                return redirect('resurrect')
                 
         
         elif request.POST.get('heal_button_active'):

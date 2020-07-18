@@ -10,7 +10,7 @@
             </div>
         {% else %}
             <h1>Game.html</h1>
-            <a href="{% url 'game' %}"">[Game]</a>
+            <a href="{% url 'game' %}">[Game]</a>
             <a href="{% url 'leaderboard' %}">[Leaderboard]</a>
             <a href="{% url 'namechanger' %}">[Change Name]</a>
             <a href="{% url 'logout' %}">[Logout]</a>
@@ -24,7 +24,7 @@
                         <h4>Top 10 by Power Crystals</h4>
                         <br>
                         {% for player in players_pc %}
-                            <p>{{ player.name }} : {{ player.power_crystals }} Power Crystals</p>
+                            <p><b>Rank {{forloop.counter }}:</b> {{ player.name }} - {{ player.power_crystals }} Power Crystals</p>
                         {% endfor %}
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                         <h4>Top 10 by Gold</h4>
                         <br>
                         {% for player in players_gold %}
-                            <p>{{ player.name }} : {{ player.gold }} Gold</p>
+                            <p><b>Rank {{forloop.counter }}:</b> {{ player.name }} - {{ player.gold }} Gold</p>
                         {% endfor %}
                     </div>
                 </div>
