@@ -75,7 +75,7 @@ class GameplayTest(unittest.TestCase):
         
         # She notices that by collecting enough power_crystals
         # her max hp has increased. She decides to heal.
-        current_hp = self.browser.find_element_by_id('')
+        
 
 
         

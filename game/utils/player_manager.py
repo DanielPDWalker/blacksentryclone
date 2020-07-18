@@ -6,18 +6,18 @@ import os
 
 def get_random_username():
     base_dir = os.path.dirname(__file__)
-    adjectives = []
-    nouns = []
+    first_word = []
+    noun = []
 
-    with open(os.path.join(base_dir, 'names/adjectives.txt'), 'r') as a_file:
+    with open(os.path.join(base_dir, 'names/first_word.txt'), 'r') as a_file:
         for name in a_file:
-             adjectives.append(name.strip())
+             first_word.append(name.strip())
 
-    with open (os.path.join(base_dir, 'names/nouns.txt'), 'r') as n_file:
+    with open (os.path.join(base_dir, 'names/noun.txt'), 'r') as n_file:
         for name in n_file:
-            nouns.append(name.strip())
+            noun.append(name.strip())
 
-    username = random.choice(adjectives).title() + random.choice(nouns).title() + str(random.randrange(1000))
+    username = random.choice(first_word).title() + random.choice(noun).title() + str(random.randrange(1000))
 
     if username in Player.objects.filter(name=username):
         get_random_username()
