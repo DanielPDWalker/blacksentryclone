@@ -12,7 +12,10 @@
             {% if user.player.hp_current < 1 %}
             
                 <h1>Game.html</h1>
-                <a href="{% url 'leaderboard' %}">Leaderboard</a>
+                <a href="{% url 'game' %}"">[Game]</a>
+                <a href="{% url 'leaderboard' %}">[Leaderboard]</a>
+                <a href="{% url 'namechanger' %}">[Change Name]</a>
+                <a href="{% url 'logout' %}">[Logout]</a>
                 <br>
                 <br>
                 <p>You are logged in as {{ user.username }}  aka  {{ player.name }}</p>

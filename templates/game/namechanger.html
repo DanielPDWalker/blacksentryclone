@@ -8,29 +8,53 @@
                 <p>You have been banned. Make a new account, try to be less like your old self. Or leave.</p>
                 <button onclick="location.href='{% url 'register' %}';"; id="register_button" type="button" class="btn btn-dark">Register</button>
             </div>
-        {% else %}            
-            <h1>Game.html</h1>
-            <a href="{% url 'leaderboard' %}">Leaderboard</a>
-            <br>
-            <br>
-            <p>You are logged in as {{ user.username }}  aka  {{ player.name }}</p>
-            <br>
-            <p>{{ player.hp_current }} / {{ player.hp_max }} HP</p>
-            <p>{{ player.power_crystals }} Power Crystals</p>
-            <p>{{ player.gold }} Gold</p>
-            <br>
-            <p>Welcome person or persons incorperated puppeting the recent remains of a person. Do you wish to change your or your skinbags name?</p>
-            <form method="POST", class="form-group">
-                {% csrf_token %}
+        {% else %}
+            {% if player.hp_current <= 0 %}
+                <h1>Game.html</h1>
+                <a href="{% url 'game' %}"">[Game]</a>
+                <a href="{% url 'leaderboard' %}">[Leaderboard]</a>
+                <a href="{% url 'namechanger' %}">[Change Name]</a>
+                <a href="{% url 'logout' %}">[Logout]</a>
                 <br>
-                {% if player.gold >= 50 %}
-                    <input type="submit" name="name_change_button" class="btn btn-dark" value="Change Name!" />
-                    <label for="name_change_button">Cost : 50 Gold</label>
-                {% else %}
-                    <input type="submit" name="name_change_button" class="btn btn-dark" value="Change Name!" disabled/>
-                    <label for="name_change_button">Cost : 50 Gold</label>
-                {% endif %}
-            </form>
+                <br>
+                <p>You are logged in as {{ user.username }}  aka  {{ player.name }}</p>
+                <br>
+                <p>{{ player.hp_current }} / {{ player.hp_max }} HP</p>
+                <p>{{ player.power_crystals }} Power Crystals</p>
+                <p>{{ player.gold }} Gold</p>
+                <br>
+                <p>Sorry, I am saving all my new names for the not dead. (You are very dead).</p>
+                <p>Please go and see if some other god will help you, I will not.</p>
+                <a href="{% url 'resurrect' %}">[Try a different god]</a>
+
+
+            {% else %}
+                <h1>Game.html</h1>
+                <a href="{% url 'game' %}"">[Game]</a>
+                <a href="{% url 'leaderboard' %}">[Leaderboard]</a>
+                <a href="{% url 'namechanger' %}">[Change Name]</a>
+                <a href="{% url 'logout' %}">[Logout]</a>
+                <br>
+                <br>
+                <p>You are logged in as {{ user.username }}  aka  {{ player.name }}</p>
+                <br>
+                <p>{{ player.hp_current }} / {{ player.hp_max }} HP</p>
+                <p>{{ player.power_crystals }} Power Crystals</p>
+                <p>{{ player.gold }} Gold</p>
+                <br>
+                <p>Welcome person or persons incorperated puppeting the recent remains of a person. Do you wish to change your or your skinbags name?</p>
+                <form method="POST", class="form-group">
+                    {% csrf_token %}
+                    <br>
+                    {% if player.gold >= 50 %}
+                        <input type="submit" name="name_change_button" class="btn btn-dark" value="Change Name!" />
+                        <label for="name_change_button">Cost : 50 Gold</label>
+                    {% else %}
+                        <input type="submit" name="name_change_button" class="btn btn-dark" value="Change Name!" disabled/>
+                        <label for="name_change_button">Cost : 50 Gold</label>
+                    {% endif %}
+                </form>
+            {% endif %}
         {% endif %}
     {% else %}
     <!-- USER NOT LOGGED IN -->

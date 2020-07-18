@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from .utils import combat, stats, player_manager
 from .models import Player, Enemy
 
@@ -32,16 +31,18 @@ def game(request):
         if request.POST.get('combat_button'):
             p = Player.objects.get(user=request.user)
             enemy_to_fight = Enemy.objects.get(name=request.POST.get('enemy_dropdown'))
-            p, dmg_delt_player, dmg_delt_enemy, result = combat.fight(p, enemy_to_fight)
+            p, dmg_delt_player, dmg_delt_enemy, result, looted_gold, looted_power_crystals = combat.fight(p, enemy_to_fight)
             
 
             context = {
                 "player": p,
                 "enemies": e,
                 "result": result,
-                "current_enemy": enemy_to_fight.name,
+                "current_enemy": enemy_to_fight,
                 "dmg_delt_player": dmg_delt_player,
-                "dmg_delt_enemy": dmg_delt_enemy
+                "dmg_delt_enemy": dmg_delt_enemy,
+                "looted_gold": looted_gold,
+                "looted_power_crystals": looted_power_crystals
                 }
             
             p.save()
@@ -98,6 +99,8 @@ def namechanger(request):
 
     if request.POST.get('name_change_button'):
         player_manager.change_name(p)
+        p.gold -= 50
+        p.save()
 
     context = {
         "player": p

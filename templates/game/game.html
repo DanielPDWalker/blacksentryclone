@@ -10,9 +10,10 @@
             </div>
         {% else %}
             <h1>Game.html</h1>
-            <a href="{% url 'leaderboard' %}">Leaderboard</a>
-            <a href="{% url 'namechanger' %}">Change Name</a>
-            <a href="{% url 'logout' %}">Logout</a>
+            <a href="{% url 'game' %}"">[Game]</a>
+            <a href="{% url 'leaderboard' %}">[Leaderboard]</a>
+            <a href="{% url 'namechanger' %}">[Change Name]</a>
+            <a href="{% url 'logout' %}">[Logout]</a>
             <br>
             <br>
             <p>You are logged in as {{ user.username }}  aka  {{ player.name }}</p>
@@ -28,24 +29,38 @@
                     <form method="POST", class="form-group">
                         {% csrf_token %}
                         <input type="submit" name="heal_button_disabled" disabled class="btn btn-dark" value="Heal"/>
-                        <label for="heal_button_disabled">Cost : {{ player.heal_cost }} Gold</label>
                     </form>  
                 {% endif %}
             <br>
             <p>{{ player.power_crystals }} Power Crystals</p>
             <p>{{ player.gold }} Gold</p>
+            <br>
+            {% if current_enemy and dmg_delt_enemy %}
+                <p>You hit the {{ current_enemy }} for {{ dmg_delt_player }} damage!</p>
+                <p class="text-danger">The {{ current_enemy }} managed to swing back for {{ dmg_delt_enemy }} damage, dazing you!</p>
+                <p class="text-danger">It managed to get away! (You will have to fight a new monster)</p>
+            {% elif current_enemy %}
+                <p class="text-success"> You hit the {{ current_enemy }} for {{ dmg_delt_player }} damage and killed it!</p>
+                <p class="text-success">You looted {{ looted_power_crystals }} power crystals and {{ looted_gold }} gold peices!
+            {% endif %}
             <form method="POST", class="form-group">
                 {% csrf_token %}
                 <br>
                 <label for="enemy_dropdown">Choose an enemy to fight:</label>
                     <select name="enemy_dropdown" id="enemy_dropdown">
-                        {% for enemy in enemies %}
-                            {% if enemy.name == current_enemy %}
-                            <option value="{{ enemy }}" selected>{{ enemy.name }}</option>
-                            {% else %}
+                        {% if dmg_delt_enemy %}
+                            {% for enemy in enemies %}
                                 <option value="{{ enemy }}">{{ enemy.name }}</option>
-                            {% endif %}
-                        {% endfor %}
+                            {% endfor %}
+                        {% else %}
+                            {% for enemy in enemies %}
+                                {% if enemy.name == current_enemy.name %}
+                                <option value="{{ enemy }}" selected>{{ enemy.name }}</option>
+                                {% else %}
+                                    <option value="{{ enemy }}">{{ enemy.name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
                     </select>
                 <br>
                 <input type="submit" name="combat_button" class="btn btn-dark" value="Fight Monster!" />

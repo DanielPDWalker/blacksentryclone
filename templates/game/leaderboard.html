@@ -10,8 +10,13 @@
             </div>
         {% else %}
             <h1>Game.html</h1>
-            <a href="{% url 'game' %}">Back to game</a>
-            <p>You are logged in as {{ user.username }}  aka  {{ player.name }}</p>
+            <a href="{% url 'game' %}"">[Game]</a>
+            <a href="{% url 'leaderboard' %}">[Leaderboard]</a>
+            <a href="{% url 'namechanger' %}">[Change Name]</a>
+            <a href="{% url 'logout' %}">[Logout]</a>
+            <br>
+            <br>
+            <p>You are logged in as {{ user.username }}  aka  {{ user.player.name }}</p>
             <br>
             <div class="row">
                 <div class="col-xs-4">
