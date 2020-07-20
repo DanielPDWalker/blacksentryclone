@@ -43,7 +43,7 @@ def game(request):
                 "dmg_delt_enemy": dmg_delt_enemy,
                 "looted_gold": looted_gold,
                 "looted_power_crystals": looted_power_crystals
-                }
+            }
             
             p.save()
             if not combat.check_alive(p):
