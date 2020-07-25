@@ -15,3 +15,5 @@ What I have ended up making is a bare-ish bones incremental game. For specifics 
   - Enemy management
   
 Its a little rough around the edges, but is in a currently working state and hosted at www.battleabyss.com.
+
+![gameplay](battleabyssgameplay.JPG)
