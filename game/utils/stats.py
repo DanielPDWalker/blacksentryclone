@@ -1,4 +1,5 @@
 def update_stats(player):
+    """Updates player stats in the database based on power crystals."""
     player.hp_max = round(player.power_crystals * 0.25)
     if player.hp_current > player.hp_max:
         player.hp_current = player.hp_max

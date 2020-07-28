@@ -7,9 +7,12 @@ def game(request):
 
     e = Enemy.objects.all().order_by('power_crystals')
 
+    # Check if player is logged in or not.
+    # The template has logic built in to ask players to login or signup.
     if request.user.is_anonymous:
         return render(request, 'game/game.html')
 
+    # Either get the player object of the user, or make a new one.
     try:
         p = Player.objects.get(user=request.user)
     except:
@@ -22,17 +25,16 @@ def game(request):
     context = {
         "player": p,
         "enemies": e
-        }
-        
-    if not combat.check_alive(p):
-        return render(request, 'game/resurrect.html', context)
+    }
 
     if request.method == 'POST':
         if request.POST.get('combat_button'):
+            # Combat logic
             p = Player.objects.get(user=request.user)
-            enemy_to_fight = Enemy.objects.get(name=request.POST.get('enemy_dropdown'))
-            p, dmg_delt_player, dmg_delt_enemy, result, looted_gold, looted_power_crystals = combat.fight(p, enemy_to_fight)
-            
+            enemy_to_fight = Enemy.objects.get(
+                name=request.POST.get('enemy_dropdown'))
+            p, dmg_delt_player, dmg_delt_enemy, result, looted_gold, looted_power_crystals = combat.fight(
+                p, enemy_to_fight)
 
             context = {
                 "player": p,
@@ -44,16 +46,14 @@ def game(request):
                 "looted_gold": looted_gold,
                 "looted_power_crystals": looted_power_crystals
             }
-            
+
             p.save()
             if not combat.check_alive(p):
                 return redirect('resurrect')
-                
-        
+
         elif request.POST.get('heal_button_active'):
             p.gold -= p.heal_cost
             p.hp_current = p.hp_max
-
 
     stats.update_stats(p)
     p.save()
@@ -62,8 +62,10 @@ def game(request):
 
 def leaderboard(request):
 
-    players_pc = Player.objects.filter(is_banned=False).order_by('-power_crystals')[:10]
-    players_gold = Player.objects.filter(is_banned=False).order_by('-gold')[:10]
+    players_pc = Player.objects.filter(
+        is_banned=False).order_by('-power_crystals')[:10]
+    players_gold = Player.objects.filter(
+        is_banned=False).order_by('-gold')[:10]
 
     context = {
         "players_pc": players_pc,
@@ -82,17 +84,18 @@ def resurrect(request):
         p.save()
 
         context = {
-        "player": p,
-        "enemies": e
+            "player": p,
+            "enemies": e
         }
 
         return redirect(game)
     context = {
         "player": p,
         "enemies": e
-        }
-        
+    }
+
     return render(request, 'game/resurrect.html', context)
+
 
 def namechanger(request):
     p = Player.objects.get(user=request.user)

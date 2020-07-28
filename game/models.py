@@ -14,12 +14,10 @@ class Player(models.Model):
     damage = models.IntegerField(default=10)
     heal_cost = models.IntegerField(default=0)
     is_banned = models.BooleanField(default=False)
-    
-         
+
     def __str__(self):
         return self.user.username
     pass
-
 
 
 class Enemy(models.Model):
@@ -29,7 +27,6 @@ class Enemy(models.Model):
     hp_max = models.IntegerField(default=10)
     gold = models.IntegerField(default=0)
     damage = models.IntegerField(default=10)
-    
 
     def __str__(self):
         return self.name

@@ -1,9 +1,45 @@
-{% extends 'base.html' %}
-
-{% block content %}
-<br>
+{% extends 'base.html' %} {% block content %}
+<br />
 <div class="container">
-    <button onclick="location.href='{% url 'login' %}'"; id="login_button" type="button" class="btn btn-dark">Login</button>
-    <button onclick="location.href='{% url 'register' %}'"; id="register_button" type="button" class="btn btn-dark">Register</button>
-</h3>
+  <button
+    onclick="location.href='{% url 'login' %}'"
+    id="login_button"
+    type="button"
+    class="btn btn-dark"
+  >
+    Login
+  </button>
+  <button
+    onclick="location.href='{% url 'register' %}'"
+    id="register_button"
+    type="button"
+    class="btn btn-dark"
+  >
+    Register
+  </button>
+  <br />
+  <br />
+  <h3>About the game</h3>
+  <p>
+    Battle Abyss is a persistant incremental game, where you choose an enemy
+    from a list, you fight them and hopefully win.<br />
+    <br />
+    - Power Crystals, looted from fight increase your damage and max hp.<br />
+    - Gold, also looted, allow you to change your player name (randomly
+    generated).<br />
+    - Kill, loot, get more powerful, then kill more for more loot!<br />
+    <br />
+    Main game screen below, to see what your signing up for:
+  </p>
+  <blockquote
+    class="imgur-embed-pub"
+    lang="en"
+    data-id="a/D9VhFeS"
+    data-context="false"
+  >
+    <a href="//imgur.com/a/D9VhFeS"></a>
+  </blockquote>
+  <script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+</div>
+
 {% endblock %}
