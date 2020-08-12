@@ -2,14 +2,14 @@ import unittest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
 import time
 
+from .local_test_settings import testpassword1, test_live_host
 
-from local_test_settings import testpassword1, test_live_host
-
-
-
-MAX_WAIT = 10
 
 class NewVisitorTest(unittest.TestCase):
 
@@ -18,20 +18,16 @@ class NewVisitorTest(unittest.TestCase):
     password1 = testpassword1
 
     def setUp(self):
-        self.browser = webdriver.Firefox()
-        self.browser.get(test_live_host)
-
+        self.browser = webdriver.Firefox('functional_tests')
+        self.browser.implicitly_wait(10)
+        
+    
     def tearDown(self):
         self.browser.quit()
 
     def sign_up(self):
-        #Find better way to wait untill page loads?
-        time.sleep(2)
-
         register = self.browser.find_element_by_id('register_button')
         register.send_keys(Keys.ENTER)
-
-        time.sleep(2)
 
         username = self.browser.find_element_by_id('id_username')
         email = self.browser.find_element_by_id('id_email')
@@ -43,11 +39,15 @@ class NewVisitorTest(unittest.TestCase):
         email.send_keys(self.email1)
         password.send_keys(self.password1)
         password_confirm.send_keys(self.password1)
-        register.send_keys(Keys.ENTER)
-
+        register.send_keys(Keys.ENTER)        
 
     def log_in(self):
-        time.sleep(2)
+        try:
+            self.browser.find_element_by_id('home_button').send_keys(Keys.ENTER)
+        except:
+            pass
+
+        self.browser.find_element_by_id('login_button').send_keys(Keys.ENTER)
 
         username = self.browser.find_element_by_id('id_username')
         password = self.browser.find_element_by_id('id_password')
@@ -57,17 +57,15 @@ class NewVisitorTest(unittest.TestCase):
         password.send_keys(self.password1)
         login.send_keys(Keys.ENTER)
 
-    def test_signup(self):
-        # Edythe has heard of this hip new game called "I DONT KNOW HOW TO NAME THINGS".
-        # She decides to sign up.
-
+    def test_signup_and_login(self):
+        # Edythe has heard of this hip new game called "Battle Abyss".
+        # She decides to go visit.
+        self.browser.get(test_live_host)
+        # She attempts to sign up, if shes already registers she just:
         self.sign_up()
-
-        # She immediately logs in.
+        # logs in
         self.log_in()
-        time.sleep(2)
-        self.assertIn('edythe', self.browser.find_element_by_id('logged_in'))
 
+        # Edythe notices that her name appears in the logged in text.
+        self.assertIn('edythe', self.browser.find_element_by_id('logged_in').text)
 
-if __name__ == "__main__":
-    unittest.main()
