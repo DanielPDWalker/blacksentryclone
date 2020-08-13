@@ -29,8 +29,8 @@ class BasicCombatAndHealTest(unittest.TestCase):
         while counter < rounds:
             enemy_list = Select(self.browser.find_element_by_id('enemy_dropdown_list'))
 
-            enemy_list.select_by_visible_text(enemy)
             # find fight button
+            enemy_list.select_by_visible_text(enemy)
             # send enter to fight button
             fight_button = self.browser.find_element_by_name('combat_button')
 
@@ -42,7 +42,6 @@ class BasicCombatAndHealTest(unittest.TestCase):
         time.sleep(0.5)   
 
     def log_in(self):
-        #Find better way to wait untill page loads?
         try:
             self.browser.find_element_by_id('home_button').send_keys(Keys.ENTER)
         except:
@@ -68,6 +67,7 @@ class BasicCombatAndHealTest(unittest.TestCase):
         # Edythe notices that her name appears in the logged in text.
         logged_in_text = self.browser.find_element_by_id('logged_in').text
         self.assertIn('edythe', logged_in_text)
+        
         # She decides to fight rats 25 times!
         self.fight_rat('Rat', rounds=25)
 

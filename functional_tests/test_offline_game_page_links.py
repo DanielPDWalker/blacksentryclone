@@ -11,7 +11,7 @@ import time
 from .local_test_settings import testpassword1, test_live_host
 
 
-class NewVisitorTest(unittest.TestCase):
+class MovingAroundSiteTest(unittest.TestCase):
 
     username1 = 'edythe'
     email1 = 'edythe@gmail.com'
@@ -40,7 +40,7 @@ class NewVisitorTest(unittest.TestCase):
         password.send_keys(self.password1)
         login.send_keys(Keys.ENTER)
 
-    def test_signup_and_login(self):
+    def test_moving_around_site(self):
         # Edythe has heard of this hip new game called "Battle Abyss".
         # She decides to go visit.
         self.browser.get(test_live_host)
@@ -51,4 +51,6 @@ class NewVisitorTest(unittest.TestCase):
 
         # Edythe notices that her name appears in the logged in text.
         self.assertIn('edythe', self.browser.find_element_by_id('logged_in').text)
+
+
 
