@@ -60,7 +60,11 @@ class MovingAroundSiteTest(unittest.TestCase):
 
         # Edythe goes back to main game page.
         self.browser.find_element_by_id('navbar_game').click()
-        self.assertIn('Choose an enemy', self.browser.find_element_by_tag_name('label').text)
+        self.assertIn('Choose an enemy', self.browser.find_element_by_id('enemy_dropdown_label').text)
+
+        # After all her tiring browsing, Edythe decides to log out.
+        self.browser.find_element_by_id('navbar_logout').click()
+        self.assertIn('About the game', self.browser.find_element_by_tag_name('h3').text)
 
 
         
