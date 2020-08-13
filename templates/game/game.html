@@ -8,11 +8,12 @@
                 <button onclick="location.href='{% url 'register' %}';"; id="register_button" type="button" class="btn btn-dark">Register</button>
             </div>
         {% else %}
-            <a href="{% url 'game' %}">[Game]</a>
-            <a href="{% url 'leaderboard' %}">[Leaderboard]</a>
-            <a href="{% url 'namechanger' %}">[Change Name]</a>
-            <a href="{% url 'logout' %}">[Logout]</a>
-            <br>
+            <div id="navbar">
+                <a id="navbar_game" href="{% url 'game' %}">[Game]</a>
+                <a id="navbar_leaderboard" href="{% url 'leaderboard' %}">[Leaderboard]</a>
+                <a id="navbar_namechanger" href="{% url 'namechanger' %}">[Change Name]</a>
+                <a id="navbar_logout" href="{% url 'logout' %}">[Logout]</a>
+            </div>
             <br>
             <p id="logged_in">You are logged in as {{ user.username }}  aka  {{ player.name }}</p>
             <br>
@@ -41,11 +42,11 @@
                 <p class="text-success"> You hit the {{ current_enemy }} for {{ dmg_delt_player }} damage and killed it!</p>
                 <p class="text-success">You looted {{ looted_power_crystals }} power crystals and {{ looted_gold }} gold peices!
             {% endif %}
-            <form method="POST", class="form-group">
+            <form method="POST", class="form-group" id="fight_form">
                 {% csrf_token %}
                 <br>
-                <label for="enemy_dropdown">Choose an enemy to fight:</label>
-                    <select name="enemy_dropdown" id="enemy_dropdown">
+                <label id="enemy_dropdown_label" for="enemy_dropdown">Choose an enemy to fight:</label>
+                    <select name="enemy_dropdown" id="enemy_dropdown_list">
                         {% if dmg_delt_enemy %}
                             {% for enemy in enemies %}
                                 <option value="{{ enemy }}">{{ enemy.name }}</option>

@@ -9,11 +9,12 @@
             </div>
         {% else %}
             {% if player.hp_current <= 0 %}
-                <a href="{% url 'game' %}"">[Game]</a>
-                <a href="{% url 'leaderboard' %}">[Leaderboard]</a>
-                <a href="{% url 'namechanger' %}">[Change Name]</a>
-                <a href="{% url 'logout' %}">[Logout]</a>
-                <br>
+            <div id="navbar">
+                <a id="navbar_game" href="{% url 'game' %}">[Game]</a>
+                <a id="navbar_leaderboard" href="{% url 'leaderboard' %}">[Leaderboard]</a>
+                <a id="navbar_namechanger" href="{% url 'namechanger' %}">[Change Name]</a>
+                <a id="navbar_logout" href="{% url 'logout' %}">[Logout]</a>
+            </div>
                 <br>
                 <p id="logged_in">You are logged in as {{ user.username }}  aka  {{ player.name }}</p>
                 <br>
@@ -27,11 +28,12 @@
 
 
             {% else %}
-                <a href="{% url 'game' %}"">[Game]</a>
-                <a href="{% url 'leaderboard' %}">[Leaderboard]</a>
-                <a href="{% url 'namechanger' %}">[Change Name]</a>
-                <a href="{% url 'logout' %}">[Logout]</a>
-                <br>
+            <div id="navbar">
+                <a id="navbar_game" href="{% url 'game' %}">[Game]</a>
+                <a id="navbar_leaderboard" href="{% url 'leaderboard' %}">[Leaderboard]</a>
+                <a id="navbar_namechanger" href="{% url 'namechanger' %}">[Change Name]</a>
+                <a id="navbar_logout" href="{% url 'logout' %}">[Logout]</a>
+            </div>
                 <br>
                 <p id="logged_in">You are logged in as {{ user.username }}  aka  {{ player.name }}</p>
                 <br>
@@ -39,7 +41,7 @@
                 <p>{{ player.power_crystals }} Power Crystals</p>
                 <p>{{ player.gold }} Gold</p>
                 <br>
-                <p>Welcome person or persons incorperated puppeting the recent remains of a person. Do you wish to change your or your skinbags name?</p>
+                <p id="main_text">Welcome person or persons incorperated puppeting the recent remains of a person. Do you wish to change your or your skinbags name?</p>
                 <form method="POST", class="form-group">
                     {% csrf_token %}
                     <br>
