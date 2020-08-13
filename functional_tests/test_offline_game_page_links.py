@@ -20,25 +20,9 @@ class NewVisitorTest(unittest.TestCase):
     def setUp(self):
         self.browser = webdriver.Firefox('functional_tests')
         self.browser.implicitly_wait(10)
-           
+    
     def tearDown(self):
         self.browser.quit()
-
-    def sign_up(self):
-        register = self.browser.find_element_by_id('register_button')
-        register.send_keys(Keys.ENTER)
-
-        username = self.browser.find_element_by_id('id_username')
-        email = self.browser.find_element_by_id('id_email')
-        password = self.browser.find_element_by_id('id_password1')
-        password_confirm = self.browser.find_element_by_id('id_password2')
-        register = self.browser.find_element_by_id('register_button')
-
-        username.send_keys(self.username1)
-        email.send_keys(self.email1)
-        password.send_keys(self.password1)
-        password_confirm.send_keys(self.password1)
-        register.send_keys(Keys.ENTER)        
 
     def log_in(self):
         try:
@@ -60,6 +44,8 @@ class NewVisitorTest(unittest.TestCase):
         # Edythe has heard of this hip new game called "Battle Abyss".
         # She decides to go visit.
         self.browser.get(test_live_host)
+        # She attempts to sign up, if shes already registers she just:
+        self.sign_up()
         # logs in
         self.log_in()
 

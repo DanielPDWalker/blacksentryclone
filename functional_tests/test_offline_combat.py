@@ -19,12 +19,10 @@ class BasicCombatAndHealTest(unittest.TestCase):
 
     def setUp(self):
         self.browser = webdriver.Firefox('functional_tests')
-        self.browser.implicitly_wait(10)
-        
+        self.browser.implicitly_wait(10)     
     
     def tearDown(self):
         self.browser.quit()
-
 
     def fight_rat(self, enemy, rounds=1):
         counter = 0
@@ -41,8 +39,7 @@ class BasicCombatAndHealTest(unittest.TestCase):
 
             counter += 1
         # Allow the rest of the template to update/reload after the combat spam.
-        time.sleep(0.5)
-        
+        time.sleep(0.5)   
 
     def log_in(self):
         #Find better way to wait untill page loads?
@@ -63,10 +60,8 @@ class BasicCombatAndHealTest(unittest.TestCase):
         password.send_keys(self.password1)
         login.send_keys(Keys.ENTER)
 
-
     def test_combat_and_healing(self):
-        # Edythe has heard of this hip new game called "Battle Abyss".
-        # She decides to go visit.
+        # Edythe decides to got back to battleabyss.com and kill some rats.
         self.browser.get(test_live_host)
         # She logs in
         self.log_in()
