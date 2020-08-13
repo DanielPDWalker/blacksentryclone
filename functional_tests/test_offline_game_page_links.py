@@ -56,9 +56,11 @@ class MovingAroundSiteTest(unittest.TestCase):
 
         # She then goes to see whats on the "Change Name" page.
         self.browser.find_element_by_id('navbar_namechanger').click()
-        self.browser.assertIn('Do you wish to change your', self.browser.find_element_by_tag_name('p').text)
+        self.assertIn('Do you wish to change your', self.browser.find_element_by_id('main_text').text)
 
-        
+        # Edythe goes back to main game page.
+        self.browser.find_element_by_id('navbar_game').click()
+        self.assertIn('Choose an enemy', self.browser.find_element_by_tag_name('label').text)
 
 
         
