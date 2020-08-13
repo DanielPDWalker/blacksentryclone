@@ -44,13 +44,16 @@ class MovingAroundSiteTest(unittest.TestCase):
         # Edythe has heard of this hip new game called "Battle Abyss".
         # She decides to go visit.
         self.browser.get(test_live_host)
-        # She attempts to sign up, if shes already registers she just:
-        self.sign_up()
-        # logs in
+        # She logs in
         self.log_in()
 
         # Edythe notices that her name appears in the logged in text.
         self.assertIn('edythe', self.browser.find_element_by_id('logged_in').text)
 
+        # Edythe goes to the leaderboard to check out the top 10 players.
+        self.browser.find_element_by_id('navbar_leaderboard').click()
+        self.assertIn('Top 10', self.browser.find_element_by_tag_name('h4').text)
 
+        self.browser.find_element_by_id('navbar_namechanger').click()
+        self.browser.assertIn('Do you wish to change your', self.browser.find_element_by_tag_name('p').text)
 
