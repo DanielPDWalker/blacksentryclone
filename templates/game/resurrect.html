@@ -29,7 +29,7 @@
                 <form method="POST", class="form-group">
                     {% csrf_token %}
                     <br>
-                    <input type="submit" name="resurrect_button" class="btn btn-dark" value="Resurrect" />
+                    <input type="submit" id="resurrect_button" name="resurrect_button" class="btn btn-dark" value="Resurrect" />
                     <label for="resurrect_button">Cost : {{player.gold }} (Yes that is all of your gold).</label>
                 </form>
             {% else %}
