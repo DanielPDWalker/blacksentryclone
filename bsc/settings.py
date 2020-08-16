@@ -131,6 +131,8 @@ LOGIN_REDIRECT_URL='/game'
 
 LOGOUT_REDIRECT_URL = 'index'
 
+USE_TZ = False
+
 try:
     from .local_settings import *
 except ImportError:
