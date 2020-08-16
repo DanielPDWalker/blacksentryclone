@@ -73,10 +73,15 @@ class TestGameUtils(TestCase):
 
     def test_combat_fight_function_fail_no_death(self):
         # Check taking a hit from the "Tank" enemy
-        self.assertEquals(combat.fight(self.test_player_two, self.test_enemy_rat )[3], False)
-        self.assertNotEquals(combat.fight(self.test_player_two, self.test_enemy_swings_back )[2], 0)        
+        # Check result of combat is False
+        self.assertEquals(combat.fight(self.test_player_two, self.test_enemy_swings_back )[3], False)
+        # Check that the enemy has done damage back
+        self.assertNotEquals(combat.fight(self.test_player_two, self.test_enemy_swings_back )[2], 0)      
+        # looted_gold should be 0 for a loss
+        self.assertEquals(combat.fight(self.test_player_two, self.test_enemy_swings_back )[4], 0)
+        # looted_power_crystals should be 0 for a loss
+        self.assertEquals(combat.fight(self.test_player_two, self.test_enemy_swings_back )[5], 0)  
     
     def test_combat_fight_function_fail_with_death(self):
         # Check dying fighting "Death"
-
         pass
